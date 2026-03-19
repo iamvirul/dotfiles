@@ -91,7 +91,69 @@ if command -v fzf &>/dev/null && [[ ! -f "$HOME/.fzf.zsh" ]]; then
 fi
 
 # -----------------------------------------------------------------------------
-# 6. Local secrets template
+# 6. SDKMAN
+# -----------------------------------------------------------------------------
+if [[ ! -d "$HOME/.sdkman" ]]; then
+  log "Installing SDKMAN..."
+  if ! $DRY_RUN; then
+    curl -s "https://get.sdkman.io" | bash
+    # Source SDKMAN so we can use sdk commands in this script
+    export SDKMAN_DIR="$HOME/.sdkman"
+    [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+  fi
+else
+  info "SDKMAN already installed, skipping."
+  export SDKMAN_DIR="$HOME/.sdkman"
+  [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+fi
+
+# -----------------------------------------------------------------------------
+# 7. OpenJDK (via SDKMAN)
+# -----------------------------------------------------------------------------
+if command -v sdk &>/dev/null; then
+  if ! sdk list java | grep -q "installed"; then
+    log "Installing OpenJDK (latest LTS) via SDKMAN..."
+    $DRY_RUN || sdk install java
+  else
+    info "OpenJDK already installed via SDKMAN, skipping."
+  fi
+else
+  warn "sdk command not available — OpenJDK not installed. Re-run install.sh after a shell restart."
+fi
+
+# -----------------------------------------------------------------------------
+# 8. Node.js / npm (via nvm)
+# -----------------------------------------------------------------------------
+if [[ ! -d "$HOME/.nvm" ]]; then
+  log "Installing nvm..."
+  if ! $DRY_RUN; then
+    NVM_LATEST=$(curl -s https://api.github.com/repos/nvm-sh/nvm/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+    curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_LATEST}/install.sh" | bash
+    export NVM_DIR="$HOME/.nvm"
+    [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+  fi
+else
+  info "nvm already installed, skipping."
+  export NVM_DIR="$HOME/.nvm"
+  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+fi
+
+if command -v nvm &>/dev/null; then
+  if ! nvm ls --no-colors | grep -q "default"; then
+    log "Installing Node.js LTS via nvm..."
+    if ! $DRY_RUN; then
+      nvm install --lts
+      nvm alias default 'lts/*'
+    fi
+  else
+    info "Node.js already installed via nvm, skipping."
+  fi
+else
+  warn "nvm command not available — Node.js not installed. Re-run install.sh after a shell restart."
+fi
+
+# -----------------------------------------------------------------------------
+# 9. Local secrets template
 # -----------------------------------------------------------------------------
 if [[ ! -f "$HOME/.zshrc.local" ]]; then
   log "Creating ~/.zshrc.local template for local secrets..."

@@ -25,6 +25,12 @@ export ANDROID_HOME="$HOME/Library/Android/sdk"
 # Go
 export GOPATH="$HOME/go"
 
+# SDKMAN
+export SDKMAN_DIR="$HOME/.sdkman"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+
 # PATH — assembled in one place to avoid duplicates
 path=(
   "$HOME/.local/bin"
@@ -37,3 +43,10 @@ path=(
   $path
 )
 export PATH
+
+# SDKMAN init (must come after PATH)
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+# nvm init
+[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
