@@ -17,35 +17,54 @@ Personal macOS developer dotfiles for [@iamvirul](https://github.com/iamvirul), 
 - **Shell**: Zsh + [Oh My Zsh](https://ohmyz.sh/) + [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
 - **Plugins**: zsh-autosuggestions, zsh-syntax-highlighting, fzf
 - **Editor**: [Neovim](https://neovim.io/) with lazy.nvim
-- **Languages**: Go, Ballerina, PHP, Rust (via rustup), Bun
+- **Languages**: Go, Ballerina, PHP, Rust (via rustup), Bun, Node.js (via nvm), Java (via SDKMAN)
+- **Container**: Rancher Desktop
 - **Terminal**: macOS Terminal / any ANSI-compatible terminal
 
-## Install
+## Fresh Mac Setup (One-liner)
+
+Open Terminal and run:
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/iamvirul/dotfiles.git ~/Developer/dotfiles
-cd ~/Developer/dotfiles
-
-# 2. Run the installer
-./install.sh
-
-# 3. Restart shell
-source ~/.zshrc
+curl -fsSL https://raw.githubusercontent.com/iamvirul/dotfiles/main/bootstrap.sh | bash
 ```
 
-### What install.sh does
+That's it. No cloning, no manual steps.
 
-1. Installs [GNU Stow](https://www.gnu.org/software/stow/) if missing
-2. Runs `brew bundle` to install all packages from `packages/Brewfile`
-3. Uses `stow` to symlink each package into `$HOME`
-4. Sets up fzf shell integration
-5. Creates `~/.zshrc.local` for machine-specific secrets (not tracked)
+### What it installs — in order
+
+| Step | Tool |
+|------|------|
+| 1 | Xcode Command Line Tools |
+| 2 | Homebrew |
+| 3 | GNU Stow |
+| 4 | All Brewfile packages (neovim, gh, fzf, go, rancher, claude…) |
+| 5 | Oh My Zsh |
+| 6 | zsh-autosuggestions + zsh-syntax-highlighting |
+| 7 | Powerlevel10k theme |
+| 8 | Dotfile symlinks via stow |
+| 9 | Git submodules |
+| 10 | fzf shell integration |
+| 11 | Rust (rustup) |
+| 12 | Bun |
+| 13 | SDKMAN |
+| 14 | OpenJDK LTS |
+| 15 | nvm + Node.js LTS |
+| 16 | Claude Code CLI |
+| 17 | `~/.zshrc.local` secrets template |
 
 ### Dry run
 
 ```bash
-./install.sh --dry-run
+curl -fsSL https://raw.githubusercontent.com/iamvirul/dotfiles/main/bootstrap.sh | bash -s -- --dry-run
+```
+
+## Manual Install (if already have git/brew)
+
+```bash
+git clone https://github.com/iamvirul/dotfiles.git ~/Developer/dotfiles
+cd ~/Developer/dotfiles
+./install.sh
 ```
 
 ## Secrets / local config
@@ -63,13 +82,17 @@ export AWS_PROFILE="personal"
 ```bash
 cd ~/Developer/dotfiles
 git pull
-./install.sh   # re-stow any new packages
+./install.sh
 ```
 
 ## Structure
 
 ```
 dotfiles/
+├── bootstrap.sh              ← one-liner entry point
+├── install.sh                ← full installer
+├── packages/
+│   └── Brewfile
 ├── git/
 │   ├── .gitconfig
 │   └── .config/git/ignore
@@ -82,16 +105,7 @@ dotfiles/
 │       ├── exports.zsh
 │       └── functions.zsh
 ├── nvim/
-│   └── .config/nvim/       ← git submodule
-├── bin/
-│   └── bin/
-├── packages/
-│   └── Brewfile
-└── install.sh
+│   └── .config/nvim/         ← git submodule
+└── bin/
+    └── bin/
 ```
-
-## Adding a new machine
-
-1. Clone repo
-2. `./install.sh`
-3. Add machine-specific config to `~/.zshrc.local`
