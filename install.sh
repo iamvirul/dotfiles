@@ -153,7 +153,17 @@ else
 fi
 
 # -----------------------------------------------------------------------------
-# 9. Local secrets template
+# 9. Claude Code CLI
+# -----------------------------------------------------------------------------
+if ! command -v claude &>/dev/null; then
+  log "Installing Claude Code CLI..."
+  $DRY_RUN || npm install -g @anthropic-ai/claude-code
+else
+  info "Claude Code CLI already installed, skipping."
+fi
+
+# -----------------------------------------------------------------------------
+# 10. Local secrets template
 # -----------------------------------------------------------------------------
 if [[ ! -f "$HOME/.zshrc.local" ]]; then
   log "Creating ~/.zshrc.local template for local secrets..."

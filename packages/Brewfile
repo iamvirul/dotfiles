@@ -23,6 +23,7 @@ brew "neovim"        # Neovim editor
 brew "qemu"          # Virtualization / emulation
 
 # --- Casks ---
+cask "claude"             # Claude desktop app
 cask "ngrok"              # Secure tunnels to localhost
 cask "rancher"            # Rancher Desktop — container management & Kubernetes
 
