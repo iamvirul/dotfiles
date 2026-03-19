@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+.Spotlight-V100
+.Trashes
+
+# Secrets — never commit these
+*.local
+.env
+.env.*
+secrets/
+
+# Oh My Zsh (installed separately, not tracked)
+zsh/.oh-my-zsh/
+
+# Powerlevel10k (large file, tracked separately)
+# zsh/.p10k.zsh  ← uncomment if you don't want to track it
+
+# Neovim plugin state (managed by lazy.nvim)
+nvim/.config/nvim/.git/
+nvim/.config/nvim/lazy-lock.json
+
+# Build artifacts
+*.zwc

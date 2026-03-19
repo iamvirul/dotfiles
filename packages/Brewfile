@@ -1,0 +1,52 @@
+# =============================================================================
+# Brewfile — macOS package definitions
+# Install with: brew bundle
+# =============================================================================
+
+# --- Taps ---
+# tap "homebrew/cask-fonts"
+
+# --- Core tools ---
+brew "fzf"           # Fuzzy finder
+brew "gh"            # GitHub CLI
+brew "git-filter-repo" # Git repo history rewriting
+
+# --- Languages & runtimes ---
+brew "go"            # Go programming language
+brew "maven"         # Java build tool
+brew "ballerina"     # Ballerina programming language
+brew "php"           # PHP
+brew "composer"      # PHP dependency manager
+brew "neovim"        # Neovim editor
+
+# --- Infrastructure ---
+brew "qemu"          # Virtualization / emulation
+
+# --- Casks ---
+cask "ngrok"         # Secure tunnels to localhost
+
+# --- VS Code extensions ---
+vscode "anthropic.claude-code"
+vscode "eliverlara.andromeda"
+vscode "pkief.material-icon-theme"
+vscode "redhat.java"
+vscode "redhat.vscode-yaml"
+vscode "ritwickdey.liveserver"
+vscode "vscjava.vscode-java-pack"
+vscode "vscjava.vscode-maven"
+vscode "wso2.ballerina"
+vscode "wso2.ballerina-integrator"
+vscode "wso2.micro-integrator"
+vscode "wso2.wso2-platform"
+vscode "postman.postman-for-vscode"
+vscode "be5invis.toml"
+vscode "anweber.httpbook"
+vscode "anweber.vscode-httpyac"
+vscode "visualstudioexptteam.vscodeintellicode"
+vscode "visualstudioexptteam.intellicode-api-usage-examples"
+vscode "github.copilot-chat"
+vscode "google.gemini-cli-vscode-ide-companion"
+
+# --- Go tools ---
+go "github.com/golangci/golangci-lint/cmd/golangci-lint"
+go "golang.org/x/tools/gopls"

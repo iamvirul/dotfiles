@@ -1,0 +1,37 @@
+[user]
+	name = iamvirul
+	email = virulwickramasinghe@gmail.com
+
+[core]
+	editor = nvim
+	autocrlf = input
+	excludesfile = ~/.config/git/ignore
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = false
+
+[push]
+	autoSetupRemote = true
+
+[diff]
+	tool = vimdiff
+	colorMoved = default
+
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+
+[alias]
+	lg = log --oneline --graph --decorate --all
+	st = status
+	co = checkout
+	br = branch
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	aliases = config --get-regexp alias
+
+[color]
+	ui = auto
